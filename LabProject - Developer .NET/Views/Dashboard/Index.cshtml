@@ -1,0 +1,179 @@
+﻿@model Dashboard
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script type="text/javascript">
+    jQuery.extend({
+        getValues: function (url) {
+            var result = null;
+            $.ajax({
+                url: url,
+                type: 'get',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    console.log(data);
+                    result = data;
+                }
+            });
+            return result;
+        }
+    });
+</script>
+
+@* 
+<script type="text/javascript">
+    $(function () {
+
+        var ctx = $("#myChart");
+
+        var lineOptions = {
+            responsive: false
+        }
+
+        $("#btn").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Dashboard/GetChartData",
+                //data: "{}",
+                dataType: "json",
+                cache: true,
+                success: function (Result) {
+                    //drawChart(JSON.stringify(Result.data));
+                    var ap = "dh";
+                    var chartInstance = new Chart(ctx,
+                        {
+                            type: 'line',
+                            data: Result.data,
+                            options: lineOptions
+                        });
+                },
+                error: function (Result) {
+                    alert("Error");
+                    console.log(Result.responseText);
+                }
+            });
+
+        })
+    })
+</script>
+ *@
+<h1>Dashboard</h1>
+
+<h2>Customer with more Expenses</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.customerMorePayments.Customer.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerMorePayments.Customer.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerMorePayments.Customer.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerMorePayments.OrdersCost)
+            </th>           
+        </tr>
+    </thead>
+    <tbody>  
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.customerMorePayments.Customer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.customerMorePayments.Customer.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.customerMorePayments.Customer.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.customerMorePayments.OrdersCost)
+            </td>                         
+        </tr>        
+    </tbody>
+</table>
+
+<h2>Customers List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.customersList[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customersList[0].Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customersList[0].Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customersList[0].DateOfBirthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customersList[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customersList[0].CountryOfResidence)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.customersList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirthday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountryOfResidence)
+                </td>               
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h2>Top 5 sold items</h2>
+
+<div> <canvas id="myChart" height="350"></canvas> </div>
+
+<script type="text/javascript">
+        var options = {
+            responsive: true,
+            maintainAspectRatio: false
+        };
+        
+        var ctx = document.getElementById("myChart").getContext('2d');
+        // var tData = $.getValues("/Dashboard/MultiLineChartDataEF");
+         var tData = $.getValues("/Dashboard/topItemsSoldChartData");
+    
+        var myLineChart = new Chart(ctx, {
+            type: 'pie',
+            data: tData,
+            options: options
+        });
+    </script>
+
+

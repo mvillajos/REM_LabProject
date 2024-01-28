@@ -1,0 +1,20 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace LabProject.Models.Customers
+{
+    public class CustomerMorePayments
+    {
+       
+        public int CustomerId { get; set; }
+
+        public string Name { get; set; } = ""; 
+
+        public string Surname { get; set; } = "";
+
+        public string Lastname { get; set; } = "";
+
+        public double OrdersCost { get; set; }
+
+    }
+}

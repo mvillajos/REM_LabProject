@@ -1,0 +1,26 @@
+﻿using LabProject.Models;
+using LabProject.Repositories.Interfaces;
+using LabProject.Services.Interfaces;
+
+namespace LabProject.Services
+{
+    public class OrderDetailsService: IOrderDetailsService
+    {
+        private readonly IOrderDetailsRepository _orderDetailsRepository;
+
+        public OrderDetailsService(IOrderDetailsRepository orderDetailsRepository)
+        { 
+            _orderDetailsRepository = orderDetailsRepository;
+        }
+
+        //public async Task<List<ItemsSold>> GetTopSoldItems(int numItems) 
+        //{
+        //    List<ItemsSold> result;
+
+        //    result = await _orderDetailsRepository.GetItemsSoldBySku(numItems);
+            
+        //    return result;
+        //}
+
+    }
+}
